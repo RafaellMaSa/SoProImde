@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Measurement</title>
+</head>
+<body>
+    <h2>Add Measurement</h2>
+    <form method="POST">
+        User:
+        <select name="user_id">
+            {% for user in users %}
+                <option value="{{ user[0] }}">{{ user[1] }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        Date: <input type="datetime-local" name="date"><br><br>
+        Weight (KG): <input type="number" name="weight" step="0.1" required><br><br>
+        Waist (cm): <input type="number" name="waist" step="0.1"><br><br>
+        Notes: <textarea name="notes"></textarea><br><br>
+
+        <input type="submit" value="Add Measurement">
+    </form>
+    <br>
+    <a href="/">Back to home</a>
+</body>
+</html>

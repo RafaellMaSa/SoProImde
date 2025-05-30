@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="UTF-8">
+        <title>{{ user_name }}'s Measurements </title>
+        <script src = "https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    </head>
+    <body>
+        <h2>Measurements for {{ user_name }}</h2>
+
+        <canvas id="weightChart" width="300"height="100"></canvas>
+        <script>
+            const ctx = document.getElementById('weightChart').getContext('2d');
+            const weightChart = new Chart(ctx, {
+                type: 'line',  
+                data: {
+                    labels: {{ dates | tojson }},
+                    datasets: [{
+                        label: 'Weight Over Time (KG)',
+                        data: {{ weights | tojson }},
+                        fill: false,
+                        borderColor: 'blue',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            title: { 
+                                display: true,
+                                 text: 'Date'
+                                }
+                            },
+                            y: { 
+                                title: { 
+                                    display: true, 
+                                    text: 'Weight (kg)'
+                                }
+                            }
+                    }
+                }
+            });
+        </script>
+
+        {% if measurements %}
+        <table border="1">
+            <tr>
+                <th>Date</th>
+                <th>Weight (KG)</th>
+                <th>Waist (cm)</th>
+                <th>Notes</th>
+            </tr>
+            {% for m in measurements %}
+            <tr>
+                <td>{{ m[0] }}</td>
+                <td>{{ m[1] }}</td>
+                <td>{{ m[2] }}</td>
+                <td>{{ m[3] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>No measurements found</p>
+        {% endif %}
+        <br>
+
+        <h3>Add New Measurement</h3>
+        <form method="post" action="/measurements/{{ user_id }}" >
+            <input type="hidden" name="user_id" value="{{ user_id }}">
+
+            <label for="date">Date:</label>
+            <input type="datetime-local" name="date"><br>
+
+            <label for="weight">Weight:</label>
+            <input type="number" name="weight" step="0.1" required><br>
+
+            <label for="waist">Waist:</label>
+            <input type="number" name="waist" step="0.1" ><br>
+
+            
+            <label for="notes">Notes:</label><br>
+            <textarea name="notes" rows="3" cols="40"></textarea><br>
+
+            <input type="submit" value="Add Measurement">
+            
+        </form>
+
+        <a href="/users">Back to users</a>
+        <a href="{{ url_for('add_measurement_route') }}"> Add New Measurement</a>
+
+    </body>     
+</html>

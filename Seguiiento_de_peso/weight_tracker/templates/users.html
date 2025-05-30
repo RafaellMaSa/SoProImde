@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Registered Users</title>
+    <style>
+        table {
+            border-collapse:  collapse;
+            width: 100%;
+        }
+        th, td {
+            padding: 8px 12px;
+            border: 1px solid #000;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            text-decoration: none;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <h2>Registered Users</h2>
+    <table>
+        <thead>
+            <tr>
+                 <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Height</th>
+                <th>Initial Weight</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user [0] }}</td>
+                <td>{{ user [1] }}</td>
+                <td>{{ user [2] }}</td>
+                <td>{{ user [3] }}</td>
+                <td>{{ user [4] }}</td>
+                <td>{{ user [5] }}</td>
+                <td>
+                    <a href="/measurements/{{ user[0] }}">View measurements</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+           
+    </table>
+    <br>
+    <a href="/">Back to Register</a>
+    <br><br>
+    <a href="/add_measurement"> Add New Measurement</a>
+</body>
+</html>
